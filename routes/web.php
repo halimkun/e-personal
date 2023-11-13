@@ -28,6 +28,11 @@ Route::group(['middleware' => 'jwt.validate'], function () {
         Route::post('create', [\App\Http\Controllers\KaryawanController::class, 'create'])->name('karyawan.create');
         Route::post('update', [\App\Http\Controllers\KaryawanController::class, 'update'])->name('karyawan.update');
         Route::delete('delete', [\App\Http\Controllers\KaryawanController::class, 'delete'])->name('karyawan.delete');
+        
+        
+        Route::group(['prefix' => 'berkas'], function () {
+            Route::get('/', [\App\Http\Controllers\BerkasKaryawanController::class, 'index'])->name('berkas_karyawan.index');
+        });
     });
 
 });
