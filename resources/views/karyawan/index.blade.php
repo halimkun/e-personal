@@ -100,14 +100,18 @@
                         {
                             data: 'nik',
                             render: function(data, type, row) {
+                                // pegawai/berkas/:nik
                                 return `
+                                    <a href="{{ route('berkas_karyawan.index', ['nik' => ':nik']) }}" class="btn btn-sm btn-primary">
+                                        <i class="ti ti-books"></i>
+                                    </a>
                                     <a href="{{ route('karyawan.edit', ':id') }}" class="btn btn-sm btn-warning">
                                         <i class="ti ti-pencil"></i>
                                     </a>
                                     <x-modal-trigger class="btn btn-sm btn-danger" target="modalDelete" data-id="${row.nik}" onclick="$('#namaKaryawan').text('${row.nama}'); $('#nikKaryawan').text('${row.nik}'); $('#nik').val('${row.nik}');">
                                         <i class="ti ti-trash"></i>
                                     </x-modal-trigger>
-                                `.replace(/:id/g, row.nik);
+                                `.replace(/:id/g, row.nik).replace(/:nik/g, row.nik).replace(/%3Anik/g, row.nik);
                             }
                         }
                     ],
