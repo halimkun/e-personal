@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/login', [\App\Http\Controllers\AuthController::class, 'index'])->name('login');
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'authenticate'])->name('login');
+
+Route::group(['middleware' => 'jwt.validate'], function () {
+    Route::get('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 });
