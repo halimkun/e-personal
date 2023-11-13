@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
 
         // Custom middleware
         'jwt.validate' => \App\Http\Middleware\JWTValidate::class,
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 }
