@@ -3,7 +3,7 @@
     'class' => '',
 ])
 
-<div class="card {{ $class }}" {{ $attributes }}>
+<div class="card shadow {{ $class }}" {{ $attributes }}>
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
             @if ($title)

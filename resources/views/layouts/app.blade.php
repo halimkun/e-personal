@@ -50,6 +50,8 @@
     <script>
         const API_URL = "{{ env('API_URL') }}";
         const API_IMAGE_URL = "{{ env('API_IMAGE_URL') }}";
+        const API_BERKAS_URL = "{{ env('API_BERKAS_URL')  }}";
+        
         const headers =  {
             "Authorization": "Bearer {{ session('token')  }}",
             "Accept": "application/json",
