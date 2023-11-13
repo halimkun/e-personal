@@ -22,6 +22,12 @@ Route::group(['middleware' => 'jwt.validate'], function () {
 
     Route::group(['prefix' => 'karyawan'], function () {
         Route::get('/', [\App\Http\Controllers\KaryawanController::class, 'index'])->name('karyawan.index');
+        Route::get('new', [\App\Http\Controllers\KaryawanController::class, 'new'])->name('karyawan.new');
+        Route::get('edit/{nik}', [\App\Http\Controllers\KaryawanController::class, 'edit'])->name('karyawan.edit');
+        
+        Route::post('create', [\App\Http\Controllers\KaryawanController::class, 'create'])->name('karyawan.create');
+        Route::post('update', [\App\Http\Controllers\KaryawanController::class, 'update'])->name('karyawan.update');
+        Route::delete('delete', [\App\Http\Controllers\KaryawanController::class, 'delete'])->name('karyawan.delete');
     });
 
 });
