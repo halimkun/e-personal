@@ -316,7 +316,6 @@
                         });
                     },
                     success: function (result) {
-                        console.log(result);
                         const berkas = result.data;
                         $('iframe').attr('src', API_BERKAS_URL + berkas.berkas);
                         
@@ -488,7 +487,6 @@
                     },
                     success: function(result) {
                         if (result.success) {
-                            console.log(result);
                             Swal.fire({
                                 icon: "success",
                                 title: "Berhasil",
@@ -499,7 +497,6 @@
                                 window.location.reload();
                             });
                         } else {
-                            console.log(result);
                             Swal.fire({
                                 icon: "error",
                                 title: "Gagal",
@@ -577,7 +574,6 @@
                     },
                     success: function(result) {
                         if (result.success) {
-                            console.log(result);
                             Swal.fire({
                                 icon: "success",
                                 title: "Berhasil",
@@ -588,7 +584,6 @@
                                 window.location.href = "{{ route('berkas_karyawan.index', ['nik' => ':nik']) }}".replace('%3Anik', result.data.nik);
                             });
                         } else {
-                            console.log(result);
                             Swal.fire({
                                 icon: "error",
                                 title: "Gagal",

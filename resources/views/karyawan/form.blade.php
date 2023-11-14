@@ -334,7 +334,6 @@
                 dataType: "json",
                 headers: headers,
                 success: function(result) {
-                    // console.log(result);
                     let html = "";
                     result.data.forEach(function(item) {
                         if (Array.isArray(text)) {

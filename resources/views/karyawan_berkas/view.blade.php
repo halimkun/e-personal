@@ -29,7 +29,6 @@
                     });
                 },
                 success: function (result) {
-                    console.log(result);
                     const berkas = result.data;
                     $('iframe').attr('src', API_BERKAS_URL + berkas.berkas);
                     
