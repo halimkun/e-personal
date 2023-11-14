@@ -1,7 +1,7 @@
 @props([
     'name',
     'title',
-    'size' => 'lg',
+    'size' => '',
 ])
 
 {{-- if size not contains modal- --}}

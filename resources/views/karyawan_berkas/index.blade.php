@@ -86,6 +86,32 @@
         </form>
     </x-modal>
 
+    <x-modal name="modal-delete-berkas" title="Hapus Berkas">
+        <form action="{{ env('API_URL') . 'pegawai/delete/berkas' }}" method="post" id="form-delete-berkas">
+            <p>Apakah anda yakin akan menghapus berkas dengan detail sebagai berikut  ? </p>
+            <table class="table table-hover table-compact">
+                <tr>
+                    <th class="text-nowrap">NIK</th>
+                    <td><span id="nik_karyawan"></span></td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap">NAMA KARYAWAN</th>
+                    <td><span id="nm_karyawan"></span></td>
+                </tr>
+                <tr>
+                    <th class="text-nowrap">NAMA BERKAS</th>
+                    <td><span id="nm_berkas"></span></td>
+                </tr>
+            </table>
+
+            <input type="hidden" name="nik" id="nik"> <input type="hidden" name="kode" id="kode"> <input type="hidden" name="berkas" id="berkas">
+
+            <div class="d-flex justify-content-end" style="gap: 10px;">
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+            </div>
+        </form>
+    </x-modal>
 
     @push('styles')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
@@ -108,9 +134,9 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/scroller/2.3.0/js/dataTables.scroller.min.js"></script>
     <script>
-        var dnik = '{{ $dnik ?? '' }}';
-        var dkode = '{{ $dkode ?? '' }}';
-        var dnama = '{{ $dnama ?? '' }}';
+        // get nik from url
+        var dnik = new URLSearchParams(window.location.search).get('nik');
+        let dname = '';
         
         $(document).ready(function () {
             $("select").select2({
@@ -132,7 +158,7 @@
 
                 scrollCollapse: true,
                 scroller: true,
-                scrollY: 250,
+                scrollY: 150,
                 
                 ajax: {
                     url: API_URL + "pegawai?datatables=1&select=nik,nama",
@@ -156,28 +182,18 @@
                 ]
             });
 
+            // main table on search remove params on url
+            $('#main-table_filter input[type="search"]').on('keyup', function () {
+                const params = new URLSearchParams(window.location.search);
+                params.delete('nik');
+                window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+            });
+
             if (dnik) {
                 const table = $('#main-table').DataTable();
                 table.search(dnik).draw();
-                // add action on table search result
-                table.on('draw', function () {
-                    const tr = $(`tr:contains(${dnik})`);
-                    tr.find('input[type="radio"]').prop('checked', true);
-                    
-                    // nm_karyawan
-                    const nm_karyawan = tr.find('td:nth-child(2)').text();
-                    const nik_karyawan = tr.find('div').data('nik');
-
-                    dnik = nik_karyawan;
-                    dnama = nm_karyawan;
-
-                    $('#nm_karyawan').text(nm_karyawan);
-                    $('#nik_karyawan').text(nik_karyawan);
-
-                    getBerkasPegawai(nik_karyawan);
-                });
             }
-
+            
             // tr on click radio button checked
             $('#main-table tbody').on('click', 'tr', function () {
                 $(this).find('input[type="radio"]').prop('checked', true);
@@ -185,12 +201,11 @@
                 // nm_karyawan
                 const nm_karyawan = $(this).find('td:nth-child(2)').text();
                 const nik_karyawan = $(this).find('div').data('nik');
-                
-                dnik = nik_karyawan;
-                dnama = nm_karyawan;
 
                 $('#nm_karyawan').text(nm_karyawan);
                 $('#nik_karyawan').text(nik_karyawan);
+
+                dname = nm_karyawan;
 
                 $('#list-berkas').html('');
                 getBerkasPegawai(nik_karyawan);
@@ -256,13 +271,20 @@
             function templateListBerkasKaryawan(berkas) {
                 let listBerkas = "";
                 $.each(berkas, function (index, item) {
-                    listBerkas += ` <a href="#modal-view-berkas" data-bs-toggle="modal" role="button" class="list-group-item list-group-item-action py-3" aria-current="true" data-nik="${item.nik}" data-kode="${item.kode_berkas}" data-berkas="${item.berkas}">
-                        <div class="d-flex w-100 justify-content-between">
+                    listBerkas += ` <a href="#modal-view-berkas" data-bs-toggle="modal" role="button" class="list-group-item list-group-item-action py-3" aria-current="true" data-nik="${item.nik}" data-kode="${item.kode_berkas}" data-berkas="${item.berkas}" data-nm-berkas="${item.master_berkas_pegawai.nama_berkas}">
+                        <div class="d-flex flex-column-reverse flex-md-row w-100 justify-content-between align-items-start align-items-md-center" style="gap: 10px;">
                             <h5 class="mb-1">${item.master_berkas_pegawai.nama_berkas}</h5>
                             <small>${formatDate(item.tgl_uploud)}</small>
                         </div>
-                        <p class="mb-1">${item.nik}</p>
-                        <small>${item.master_berkas_pegawai.kategori}</small>
+                        <div class="d-flex flex-row w-100 justify-content-between align-items-end mt-3" style="gap: 10px;">
+                            <div>
+                                <p class="m-0 p-0">${item.nik}</p>
+                                <small>${item.master_berkas_pegawai.kategori}</small>    
+                            </div>
+                            <x-modal-trigger class="btn btn-sm btn-danger" id="btn-delete-berkas" target="modal-delete-berkas" data-nik="${item.nik}" data-kode="${item.kode_berkas}" data-berkas="${item.berkas}" data-nm-berkas="${item.master_berkas_pegawai.nama_berkas}">
+                                <x-t-icon icon="trash" />
+                            </x-modal-trigger>
+                        </div>
                     </a>
                     `.replace(':kode', item.kode_berkas).replace(':nik', item.nik);
                 });
@@ -486,6 +508,95 @@
                                 timer: 1500,
                             }).then(function() {
                                 window.location.reload();
+                            });
+                        }
+                    },
+
+                    error: function(xhr, status, error) {
+                        console.log(xhr);
+                    }
+                });
+            });
+
+            // modal-delete-berkas on show
+            $('#modal-delete-berkas').on('show.bs.modal', function (event) {
+                const button = $(event.relatedTarget);
+                
+                let nik = button.data('nik');
+                let kode = button.data('kode');
+                let berkas = button.data('berkas');
+                let nm_berkas = button.data('nm-berkas');
+                let nm_karyawan = dname;
+
+                $('#modal-delete-berkas #nik_karyawan').text(nik);
+                $('#modal-delete-berkas #nm_karyawan').text(nm_karyawan);
+                $('#modal-delete-berkas #nm_berkas').text(nm_berkas);
+
+                // set input hidden
+                $('#modal-delete-berkas input[name="nik"]').val(nik);
+                $('#modal-delete-berkas input[name="kode"]').val(kode);
+                $('#modal-delete-berkas input[name="berkas"]').val(berkas);
+            });
+
+            // modal-delete-berkas on close
+            $('#modal-delete-berkas').on('hide.bs.modal', function () {
+                $('#modal-delete-berkas input[name="nik"]').val('');
+                $('#modal-delete-berkas input[name="kode"]').val('');
+                $('#modal-delete-berkas input[name="berkas"]').val('');
+
+                // reset form
+                $('#modal-delete-berkas form')[0].reset();
+            });
+
+            // modal-delete-berkas form on submit
+            $("#form-delete-berkas").on('submit', function (e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+
+                const lh =  {
+                    "Authorization": "Bearer {{ session('token')  }}",
+                };
+
+                $.ajax({
+                    url: $(this).attr("action"),
+                    type: "POST",
+                    data: formData,
+                    dataType: "json",
+                    headers: lh,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: "Loading...",
+                            showConfirmButton: false,
+                            allowOutsideClick: false,
+                            willOpen: () => {
+                                Swal.showLoading();
+                            },
+                        });
+                    },
+                    success: function(result) {
+                        if (result.success) {
+                            console.log(result);
+                            Swal.fire({
+                                icon: "success",
+                                title: "Berhasil",
+                                text: result.message,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            }).then(function() {
+                                window.location.href = "{{ route('berkas_karyawan.index', ['nik' => ':nik']) }}".replace('%3Anik', result.data.nik);
+                            });
+                        } else {
+                            console.log(result);
+                            Swal.fire({
+                                icon: "error",
+                                title: "Gagal",
+                                text: result.message,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            }).then(function() {
+                                window.location.href = "{{ route('berkas_karyawan.index', ['nik' => ':nik']) }}".replace('%3Anik', result.data.nik);
                             });
                         }
                     },

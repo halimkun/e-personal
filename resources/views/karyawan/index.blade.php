@@ -1,9 +1,9 @@
 <x-app-layout>
-    <x-slot name="title">List Karyawan | E-PERSONAL RSIA Aisyiyah Pekajangan</x-slot>
+    <x-slot name="title">Data Karyawan | E-PERSONAL RSIA Aisyiyah Pekajangan</x-slot>
 
     <div class="row">
         <div class="col-12">
-            <x-card-content title="List Karyawan">
+            <x-card-content title="Data Karyawan">
                 <x-slot name="action">
                     <a href="{{ route('karyawan.new') }}" class="btn btn-sm btn-success">
                         <i class="ti ti-plus"></i>
