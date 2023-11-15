@@ -514,6 +514,13 @@
                     },
 
                     error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: xhr.responseJSON.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
                         console.log(xhr);
                     }
                 });
@@ -601,6 +608,13 @@
                     },
 
                     error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: xhr.responseJSON.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
                         console.log(xhr);
                     }
                 });
