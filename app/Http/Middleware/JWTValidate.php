@@ -20,6 +20,7 @@ class JWTValidate
 
         $token = session('token');
         if (!$token) {
+            session()->flush();
             return redirect()->route('login', ['ref' => $path])->with('error', 'Anda harus login terlebih dahulu!');
         }
 
@@ -39,16 +40,19 @@ class JWTValidate
         $statusCode = $response->getStatusCode();
 
         if ($statusCode != 200) {
+            session()->flush();
             return redirect()->route('login', ['ref' => $path])->with('error', $json_response['message']);
         }
 
         // if $json_response['data']['dpt'] null then redirect to login
         if (!$json_response['data']['dpt']) {
+            session()->flush();
             return redirect()->route('login', ['ref' => $path])->with('error', 'Anda tidak diizinkan login!');
         }
 
         $allowed_departments = ['SEKRE', 'DIKLAT', 'SDI'];
         if (!$this->str_containsa($json_response['data']['dpt']['nama'], $allowed_departments)) {
+            session()->flush();
             return redirect()->route('login', ['ref' => $path])->with('error', 'Anda tidak diizinkan login!');
         }
 

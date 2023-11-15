@@ -102,7 +102,8 @@ class AuthController extends Controller
 
             session()->forget('token');
             session()->forget('user');
-
+            session()->flush();
+            
             return redirect()->route('login');
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             if ($e->hasResponse()) {
