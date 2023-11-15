@@ -50,7 +50,7 @@ class JWTValidate
             return redirect()->route('login', ['ref' => $path])->with('error', 'Anda tidak diizinkan login!');
         }
 
-        $allowed_departments = ['SEKRE', 'DIKLAT', 'SDI'];
+        $allowed_departments = ['SEKRE', 'DIKLAT', 'SDI', '-'];
         if (!$this->str_containsa($json_response['data']['dpt']['nama'], $allowed_departments)) {
             session()->flush();
             return redirect()->route('login', ['ref' => $path])->with('error', 'Anda tidak diizinkan login!');
