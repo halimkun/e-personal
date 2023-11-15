@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/libs/simplebar/dist/simplebar.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/icons/tabler-icons/tabler-icons.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.36.0/tabler-icons.min.css">
 
     @stack('styles')
 </head>

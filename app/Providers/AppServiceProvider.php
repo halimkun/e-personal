@@ -26,30 +26,8 @@ class AppServiceProvider extends ServiceProvider
         if(config('app.env') === 'production') {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         } else {
-            $envFile = app()->environmentFilePath();
-
-            if (!$this->isIPv4Address(request()->server->get("SERVER_ADDR"))) {
+            if (!$this->isIPv4Address(request()->server->get("SERVER_NAME"))) {
                 \Illuminate\Support\Facades\URL::forceScheme("https");
-            } else {
-                if (file_exists($envFile) && !preg_match('/\b(192\.168\.100\.31|192\.168\.100\.33)\b/', parse_url(env('API_SERVER'), PHP_URL_HOST))) {
-                    $content = file_get_contents($envFile);
-
-                    $content = preg_replace('/API_SERVER=(.*)/m', 'API_SERVER="http://192.168.100.33"', $content);
-                    file_put_contents($envFile, $content);
-                }
-
-                \Artisan::call('config:clear');
-            }
-            
-            if (in_array(request()->server->get("SERVER_ADDR"), ['192.168.100.31', '192.168.100.33'])) {
-                if (file_exists($envFile) && !preg_match('/\b(192\.168\.100\.31|192\.168\.100\.33)\b/', parse_url(env('API_SERVER'), PHP_URL_HOST))) {
-                    $content = file_get_contents($envFile);
-                    
-                    $content = preg_replace('/API_SERVER=(.*)/m', 'API_SERVER="'.request()->server->get("SERVER_ADDR").'"', $content);
-                    file_put_contents($envFile, $content);
-                }
-
-                \Artisan::call('config:clear');
             }
         }
     }
