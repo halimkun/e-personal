@@ -158,7 +158,7 @@
 
                 scrollCollapse: true,
                 scroller: true,
-                scrollY: 150,
+                scrollY: 250,
                 
                 ajax: {
                     url: API_URL + "pegawai?datatables=1&select=nik,nama",
@@ -494,7 +494,7 @@
                                 showConfirmButton: false,
                                 timer: 1500,
                             }).then(function() {
-                                window.location.reload();
+                                window.location.href = "{{ route('berkas_karyawan.index', ['nik' => ':nik']) }}".replace('%3Anik', result.data.nik);
                             });
                         } else {
                             Swal.fire({
@@ -504,7 +504,7 @@
                                 showConfirmButton: false,
                                 timer: 1500,
                             }).then(function() {
-                                window.location.reload();
+                                window.location.href = "{{ route('berkas_karyawan.index', ['nik' => ':nik']) }}".replace('%3Anik', result.data.nik);
                             });
                         }
                     },
