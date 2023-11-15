@@ -44,12 +44,14 @@
     </x-modal>
 
 
-    <x-modal name="modal-upload-berkas" title="Upload Berkas" size="lg">
+    <x-modal name="modal-upload-berkas" title="Upload Berkas" size="xl">
         <table class="table" id="table-on-upload">
             <thead>
                 <tr>
                     <th>NIK</th>
                     <th>NAMA</th>
+                    <th>BIDANG</th>
+                    <th>JABATAN</th>
                     <th>DEPARTEMEN</th>
                 </tr>
             </thead>
@@ -370,7 +372,7 @@
                     scrollY: 150,
                     
                     ajax: {
-                        url: API_URL + "pegawai?datatables=1&select=nik,nama",
+                        url: API_URL + "pegawai?datatables=1&select=nik,nama,bidang,jbtn",
                         headers: headers,
                     },
                     
@@ -387,6 +389,8 @@
                             }
                         },
                         { data: 'nama', name: 'nama' },
+                        { data: 'bidang', name: 'bidang' },
+                        { data: 'jbtn', name: 'jbtn' },
                         { data: 'dpt.nama', name: 'dpt.nama' }
                     ]
                 });
