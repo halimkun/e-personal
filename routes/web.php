@@ -36,4 +36,7 @@ Route::group(['middleware' => 'jwt.validate'], function () {
         });
     });
 
+    Route::group(['prefix' => 'surat'], function () {
+        Route::get('/internal', [\App\Http\Controllers\SuratController::class, 'internal'])->name('surat.internal');
+    });
 });

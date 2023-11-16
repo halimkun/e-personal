@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/libs/simplebar/dist/simplebar.css') }}" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.36.0/tabler-icons.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/icons/tabler-icons/tabler-icons.css') }}" />
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.36.0/tabler-icons.min.css"> --}}
 
     @stack('styles')
 </head>
@@ -50,7 +51,8 @@
     <script>
         const API_URL = "{{ env('API_URL') }}";
         const API_IMAGE_URL = "{{ env('API_IMAGE_URL') }}";
-        const API_BERKAS_URL = "{{ env('API_BERKAS_URL')  }}";
+        // const API_BERKAS_URL = "{{ env('API_BERKAS_URL')  }}";
+        const API_BERKAS_URL = window.location.protocol + "//" + window.location.host + "/webapps/penggajian";
         
         const headers =  {
             "Authorization": "Bearer {{ session('token')  }}",

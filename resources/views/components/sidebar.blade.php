@@ -23,6 +23,15 @@
 
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                    <span class="hide-menu">SURAT</span>
+                </li>
+                <li class="sidebar-item">
+                    <x-sidebar-link href="{{ route('surat.internal') }}" text="Surat Internal" icon="mail-star" />
+                </li>
+
+
+                <li class="nav-small-cap">
+                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">MASTER</span>
                 </li>
                 <li class="sidebar-item">
