@@ -298,6 +298,8 @@
             $('#modal-view-berkas').on('show.bs.modal', function (event) {
                 const button = $(event.relatedTarget);
                 const berkas = button.data('berkas');
+                console.log(berkas);
+                console.log(API_BERKAS_URL + berkas);
 
                 $('iframe').attr('src', API_BERKAS_URL + berkas);
             });
