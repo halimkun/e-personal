@@ -13,8 +13,11 @@
                 <table class="table" id="main-table">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>NIK</th>
                             <th>NAMA</th>
+                            <th>BIDANG</th>
+                            <th>JABATAN</th>
                             <th>DEPARTEMEN</th>
                         </tr>
                     </thead>
@@ -163,11 +166,12 @@
                 scrollY: 250,
                 
                 ajax: {
-                    url: API_URL + "pegawai?datatables=1&select=nik,nama",
+                    url: API_URL + "pegawai?datatables=1&select=nik,nama,bidang,jbtn",
                     headers: headers,
                 },
                 
                 columns: [
+                    {},
                     {
                         data: 'nik',
                         render: function (data, type, row) {
@@ -180,6 +184,8 @@
                         }
                     },
                     { data: 'nama', name: 'nama' },
+                    { data: 'bidang', name: 'bidang' },
+                    { data: 'jbtn', name: 'jbtn' },
                     { data: 'dpt.nama', name: 'dpt.nama' }
                 ]
             });
