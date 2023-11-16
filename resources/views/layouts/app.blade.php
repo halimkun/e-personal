@@ -52,7 +52,7 @@
         const API_URL = "{{ env('API_URL') }}";
         const API_IMAGE_URL = "{{ env('API_IMAGE_URL') }}";
         // const API_BERKAS_URL = "{{ env('API_BERKAS_URL')  }}";
-        const API_BERKAS_URL = window.location.protocol + "//" + window.location.host + "/webapps/penggajian";
+        const API_BERKAS_URL = window.location.protocol + "//" + window.location.host + "/webapps/penggajian/";
         
         const headers =  {
             "Authorization": "Bearer {{ session('token')  }}",
