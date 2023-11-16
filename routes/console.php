@@ -17,3 +17,40 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+
+function disable_migrate_commands($t) {
+    $t->newLine();
+    $t->error(' THIS COMMAND IS DISABLED ');
+    $t->comment('database of this project is not managed by laravel');
+    $t->comment('use database management tools like navicat or mysql workbench to manage database');
+    $t->newLine();
+}
+
+Artisan::command('migrate', function () {
+    disable_migrate_commands($this);
+})->purpose('Overriding migrate command');
+
+Artisan::command('migrate:fresh', function () {
+    disable_migrate_commands($this);
+})->purpose('Overriding migrate:fresh command');
+
+Artisan::command('migrate:install', function () {
+    disable_migrate_commands($this);
+})->purpose('Overriding migrate:install command');
+
+Artisan::command('migrate:refresh', function () {
+    disable_migrate_commands($this);
+})->purpose('Overriding migrate:refresh command');
+
+Artisan::command('migrate:reset', function () {
+    disable_migrate_commands($this);
+})->purpose('Overriding migrate:reset command');
+
+Artisan::command('migrate:rollback', function () {
+    disable_migrate_commands($this);
+})->purpose('Overriding migrate:rollback command');
+
+Artisan::command('migrate:status', function () {
+    disable_migrate_commands($this);
+})->purpose('Overriding migrate:status command');
