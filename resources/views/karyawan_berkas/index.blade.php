@@ -13,7 +13,6 @@
                 <table class="table" id="main-table">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>NIK</th>
                             <th>NAMA</th>
                             <th>BIDANG</th>
@@ -151,9 +150,7 @@
             $('#main-table').DataTable({
                 processing: true,
                 serverSide: true,
-                responsive: true,
                 ordering: false,
-
                 pagingType: "simple",
                 pageLength: 5,
                 lengthMenu: [
@@ -171,7 +168,6 @@
                 },
                 
                 columns: [
-                    {},
                     {
                         data: 'nik',
                         render: function (data, type, row) {
