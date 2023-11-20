@@ -10,18 +10,20 @@
                     </x-modal-trigger>
                 </x-slot>
                 
-                <table class="table" id="main-table">
-                    <thead>
-                        <tr>
-                            <th>NIK</th>
-                            <th>NAMA</th>
-                            <th>BIDANG</th>
-                            <th>JABATAN</th>
-                            <th>DEPARTEMEN</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table" id="main-table">
+                        <thead>
+                            <tr>
+                                <th>NIK</th>
+                                <th>NAMA</th>
+                                <th>BIDANG</th>
+                                <th>JABATAN</th>
+                                <th>DEPARTEMEN</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </x-card-content>
         </div>
 
@@ -47,18 +49,20 @@
 
 
     <x-modal name="modal-upload-berkas" title="Upload Berkas" size="xl">
-        <table class="table" id="table-on-upload">
-            <thead>
-                <tr>
-                    <th>NIK</th>
-                    <th>NAMA</th>
-                    <th>BIDANG</th>
-                    <th>JABATAN</th>
-                    <th>DEPARTEMEN</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table" id="table-on-upload">
+                <thead>
+                    <tr>
+                        <th>NIK</th>
+                        <th>NAMA</th>
+                        <th>BIDANG</th>
+                        <th>JABATAN</th>
+                        <th>DEPARTEMEN</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
 
         <form action="{{ env('API_URL') . 'pegawai/upload/berkas' }}" id="form-upload-berkas" method="POST" enctype="multipart/form-data">
             @csrf
@@ -151,6 +155,7 @@
                 processing: true,
                 serverSide: true,
                 ordering: false,
+                responsive: false,
                 pagingType: "simple",
                 pageLength: 5,
                 lengthMenu: [
@@ -361,7 +366,7 @@
                 $('#modal-upload-berkas #table-on-upload').DataTable({
                     processing: true,
                     serverSide: true,
-                    responsive: true,
+                    responsive: false,
                     ordering: false,
 
                     pagingType: "simple",
